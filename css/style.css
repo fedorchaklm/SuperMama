@@ -1,0 +1,8 @@
+body {
+  background-image: url("../images/bg_main.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Lobster", sans-serif;
+  min-height: 100vh;
+}
+
