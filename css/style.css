@@ -6,3 +6,107 @@ body {
   min-height: 100vh;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+.form,
+.form-init {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding: 20px;
+  background: rgba(246, 225, 225, 0.297);
+  border-radius: 10px;
+}
+
+.form-init {
+  gap: 20px;
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  -webkit-text-stroke-width: 1;
+  -webkit-text-stroke-color: #000;
+  font-size: 6rem;
+  padding-top: 80px;
+}
+
+h2 {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 4rem;
+}
+
+h3 {
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 2rem;
+}
+
+.form__heading {
+  color: #fff;
+  text-align: center;
+  font-size: 3.5rem;
+  padding-top: 100px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #a24f63;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.form__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 245px;
+  padding: 8px;
+  font-size: 2rem;
+  text-align: center;
+  color: #670931;
+  background: rgba(246, 225, 225, 0.86);
+  border-radius: 10px;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.form__item--empty {
+  background: #a24f63;
+}
+
+.form__btn {
+  border-radius: 40px;
+  background: #aa044a;
+  font-family: "Lobster";
+  padding: 20px;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  align-self: flex-end;
+  width: 245px;
+  border: 0;
+  cursor: pointer;
+}
+
+input {
+  text-overflow: ellipsis;
+}
