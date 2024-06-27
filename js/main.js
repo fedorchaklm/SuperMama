@@ -7,6 +7,7 @@ class Competition {
     this.participants = [];
     this.status = "init";
     this.marks = [];
+    this.res = [];
     this.container = document.querySelector(".container");
   }
 
@@ -257,6 +258,7 @@ class Competition {
         const result = getJudgeResult();
         console.log(result);
         this.res = result;
+        console.log(this.res);
         this.setStatus("result");
         this.draw();
     });
@@ -269,7 +271,8 @@ class Competition {
   }
 
   drawResult() {
-    const standings = getStandings(this.participants, this.marks);
+    const points = totalPoints(this.marks, this.res);
+    const standings = getStandings(this.participants, points);
     let html = "";
     standings.forEach(({ participant, mark }) => {
       html += `
@@ -310,6 +313,19 @@ function getMarks(formObj) {
     acc[index] += Number(formObj[key]);
     return acc;
   }, []);
+}
+
+function totalPoints(marks, res) {
+  if (marks.length !== res.length){
+    throw new Error("Массивы должны быть одинаковой длины");
+  } 
+  let resultArray = [];
+
+  for (let i = 0; i < res.length; i++) {
+      resultArray.push(marks[i] + res[i]);
+  }
+
+  return resultArray;
 }
 
 function getStandings(participants, marks) {
