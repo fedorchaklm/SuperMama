@@ -120,22 +120,60 @@ class Competition {
       main += "</div>";
     });
     const html = `
-   <h2 class="form__heading">Таблиця оцінок</h2>
-   <form class="form" id="voteForm">
-   <div class="wrap" id="wrap">
-      <div class="row">
-        <div class="form__item">
-          <span>Участниці/</span>
-          <span >Судді</span>
+    <h2 class="form__heading">Таблиця оцінок</h2>
+    <form class="form" id="voteForm">
+    <div class="wrap" id="wrap">
+        <div class="row">
+          <div class="form__item">
+            <span>Участниці/</span>
+            <span >Судді</span>
+          </div>
+          ${judjesItems}
         </div>
-        ${judjesItems}
+        ${main}
       </div>
-      ${main}
-    </div>
-    <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
-    </form>
-  `;
+      <div class="container container-sm">
+        <input type="button" value="+">
+        <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
+      </div>
+      </form>
+    `;
     this.container.innerHTML = html;
+    const addParticipantBtn = document.querySelector('input[type="button"]');
+    addParticipantBtn.addEventListener("click", () => {
+      const wrap = document.querySelector("#wrap");
+      const index = this.participants.length;
+      this.participants.push(`Участник${index + 1}`);
+      let formItem = "";
+      this.judjes.forEach((judje, j) => {
+        formItem += `
+     <select class="form__item" name="mark-${index}-${j + 1}" required>
+      <option label="Бали" value=""></option>
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+    `;
+      });
+      const addedRow = `
+     <div class="row">
+      <input 
+        type="text" 
+        class="form__item" 
+        name="participant-${index}" 
+        value="${this.participants[index]}"
+        >
+      ${formItem}
+     </div>`;
+      wrap.innerHTML += addedRow;
+    });
     const voteForm = document.querySelector("#voteForm");
     voteForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -185,7 +223,7 @@ class Competition {
 }
 
 function getMarks(formObj) {
-  const keys = Object.keys(formObj).filter(key => key.startsWith('mark'));
+  const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
   return keys.reduce((acc, key) => {
     const index = Number(key.split("-")[1]);
     if (acc[index] === undefined) {
