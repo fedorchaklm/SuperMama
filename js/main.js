@@ -37,10 +37,9 @@ class Competition {
     }
   }
 
-
   drawInit() {
     let html = `
-    <h1>Супер Мама</h1>
+    <h1>${this.name}</h1>
     <h2>Реєстрація суддів та учасниць:</h2>
     <form action="#" class="form-init" id="initForm">
       <h3>Судді:</h3>
@@ -72,9 +71,6 @@ class Competition {
        <option value="10">10</option>
       </select>
     `;
-    // this.participants.forEach((participant, index) => {
-    //   html += ` <input type="text" class="form__item" name="participant-${index}" value="${participant}" placeholder="Введіть ім'я участниці" required>`;
-    // });
 
     html += ` 
       <input class="form__btn" type="submit" value="Зареєструватися" id="start">
@@ -94,7 +90,7 @@ class Competition {
   }
 
   drawPlaying() {
-    const judjesItems = this.judjes.reduce((acc, item,index) => {
+    const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
         `<input type="text" class="form__item" name="judje-${index}" value="${item}">`
@@ -108,7 +104,7 @@ class Competition {
       `;
       this.judjes.forEach((judje, j) => {
         main += `
-     <select class="form__item" name="${i}-${j}" required>
+      <select class="form__item" name="mark-${i}-${j}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
@@ -147,18 +143,15 @@ class Competition {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formObj = Object.fromEntries(formData.entries());
-      // console.log(formObj);
-      // console.log(formObj[this.participants[1]]);
-      // this.judjes.map((judje, index) => {
-      //   this.judjes[index] = formObj[judje];
-      // });
+      console.log(formObj);
       for (let i = 0; i < this.participants.length; i++) {
         this.participants[i] = formObj[`participant-${i}`];
       }
       for (let i = 0; i < this.judjes.length; i++) {
-        this.judjes[i] = formObj[`participant-${i}`];
+        this.judjes[i] = formObj[`judje-${i}`];
       }
       this.marks = getMarks(formObj);
+      console.log(this.marks);
       this.setStatus("judgesPoints");
       this.draw();
     });
@@ -305,8 +298,9 @@ class Competition {
 }
 
 function getMarks(formObj) {
-  return Object.keys(formObj).reduce((acc, key) => {
-    const index = Number(key.split("-")[0]);
+  const keys = Object.keys(formObj).filter(key => key.startsWith('mark'));
+  return keys.reduce((acc, key) => {
+    const index = Number(key.split("-")[1]);
     if (acc[index] === undefined) {
       acc[index] = 0;
     }
@@ -336,5 +330,5 @@ function getStandings(participants, marks) {
   return participantsMarks.sort((a, b) => b.mark - a.mark);
 }
 
-const competition = new Competition("Super mama");
+const competition = new Competition("Супер Мама");
 competition.draw();
