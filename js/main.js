@@ -8,6 +8,9 @@ class Competition {
     this.status = "init";
     this.marks = [];
     this.container = document.querySelector(".container");
+    
+    //this.body = document.querySelector("body");
+    this.body = document.body;
   }
 
   setStatus(state) {
@@ -155,17 +158,37 @@ class Competition {
     });
   }
 
+  
   drawResult() {
+   
     const standings = getStandings(this.participants, this.marks);
+    let compResults;
+    for(let participant = 0; participant < standings.length; participant++) {
+      console.log(participant + 1);
+      console.log(standings[participant].participant);
+      console.log(standings[participant].mark);
+      compResults +=
+      `
+      <div class="winnerPlace">${participant + 1}</div>
+      <input class="winner" type="text" value="${standings[participant].participant} : ${standings[participant].mark}"></input>
+      `
+    }
+
+    // standings.forEach(({ participant, mark }) => {
+    //   compResults += `
+    //     <input class="winner" type="text" value="${standings.indexOf(participant)} ${participant} : ${mark}"></input>
+    //   `;
+    // });
+
     let html = "";
-    standings.forEach(({ participant, mark }) => {
-      html += `
-      <div>
-      <span style="color:#fff; font-size: 5rem">${participant} : ${mark}</span>
+    html += `
+      <div class="gameResult">
+        <h2 class="form__heading">Our Winners</h2>
+        <div class="winnerList">${compResults}</div>
       </div>
-      `;
-    });
-    this.container.innerHTML = html;
+    `;
+    this.body.innerHTML = html;
+    
   }
 
   draw() {

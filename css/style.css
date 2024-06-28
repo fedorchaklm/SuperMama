@@ -110,3 +110,44 @@ h3 {
 input {
   text-overflow: ellipsis;
 }
+
+.gameResult {
+  background-image: url("../images/winners.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: "Lobster", sans-serif;
+  min-height: 100vh;
+}
+
+.winnerList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 62px;
+}
+
+.winner {
+  font-size: 40px;
+  width: 389px;
+  padding: 23px;
+  border-radius: 10px;
+  border: none;
+  background-color: #FEF2DE
+}
+
+.form__heading {
+  text-align: left;
+  margin-left: 100px;
+  margin-bottom: 35px;
+  font-size: 100px;
+}
+
+.winnerPlace {
+  width: 50px;
+  background-color: #FEF2DE;
+  border-radius: 50px;
+  padding: 52px;
+}
