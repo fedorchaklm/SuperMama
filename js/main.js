@@ -164,9 +164,9 @@ class Competition {
     const standings = getStandings(this.participants, this.marks);
     let compResults;
     for(let participant = 0; participant < standings.length; participant++) {
-      console.log(participant + 1);
-      console.log(standings[participant].participant);
-      console.log(standings[participant].mark);
+      // console.log(participant + 1);
+      // console.log(standings[participant].participant);
+      // console.log(standings[participant].mark);
       compResults +=
       `
       <div class="winnerPlace">${participant + 1}</div>
