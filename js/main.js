@@ -149,7 +149,7 @@ class Competition {
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
-     <select class="form__item" name="mark-${index}-${j + 1}" required>
+      <select class="form__item" name="mark-${index}-${j + 1}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
@@ -200,17 +200,17 @@ class Competition {
     const container = document.querySelector(".container");
     //заголовок
     const title = document.createElement("h2");
-    title.classList.add("title");
+    title.classList.add("form__heading");
     title.textContent = "Oцінка судді";
 
-    const box = document.createElement("div");
-    box.classList.add("box");
+    const wrap = document.createElement("div");
+    wrap.classList.add("wrap", "wrap--special");
     //кнопка результаты голосования
     const button = document.createElement("div");
     button.classList.add("button");
     const link = document.createElement("a");
     link.classList.add("link");
-    link.textContent = "результати голосування";
+    link.textContent = "Результати голосування";
     button.appendChild(link);
 
     //таблица
@@ -219,34 +219,32 @@ class Competition {
 
     //шапка таблицы
     const rowSpesial = document.createElement("div");
-    rowSpesial.classList.add("row--special");
-    const itemSpesial = document.createElement("div");
-    itemSpesial.classList.add("item", "diagonal-cell");
-    rowSpesial.appendChild(itemSpesial);
-
-    const tableTitleLeft = document.createElement("div");
-    tableTitleLeft.classList.add("bottom-left");
-    tableTitleLeft.textContent = "учасниці";
-    itemSpesial.appendChild(tableTitleLeft);
-    const tableTitleRight = document.createElement("div");
-    tableTitleRight.classList.add("top-right");
-    tableTitleRight.textContent = "суддя";
-    itemSpesial.appendChild(tableTitleRight);
+    rowSpesial.classList.add("row");
     const item = document.createElement("div");
-    item.textContent = "Дмитро Карпачов";
-    item.classList.add("item", "item--spesiali");
+    item.classList.add("item");
     rowSpesial.appendChild(item);
-    table.appendChild(rowSpesial);
+    const span = document.createElement("span");
+    span.textContent = "Учасниці/";
+    item.appendChild(span);
+    const span2 = document.createElement("span");
+    span2.textContent = "Суддя";
+    item.appendChild(span2);
+
+    const itemJudje = document.createElement("div");
+    itemJudje.textContent = "Дмитро Карпачов";
+    itemJudje.classList.add("item");
+    rowSpesial.appendChild(itemJudje);
+    wrap.appendChild(rowSpesial);
 
     this.participants.forEach((participant, index) => {
       const row = getRow(participant, index);
-      table.appendChild(row);
+      wrap.appendChild(row);
     });
 
     //формирования таблицы
     function getRow(participant, index) {
       const row = document.createElement("div");
-      row.classList.add("row--special");
+      row.classList.add("row");
 
       const inputText = document.createElement("input");
       inputText.classList.add("item");
@@ -255,49 +253,43 @@ class Competition {
       inputText.value = `${participant}`;
       row.appendChild(inputText);
 
-      const inputNumber = document.createElement("input");
-      inputNumber.type = "number";
-      inputNumber.min = 1;
-      inputNumber.max = 10;
-      inputNumber.addEventListener("change", function () {
-        if (this.value > 10) {
-          this.value = 10;
-        }
-      });
-      inputNumber.classList.add("item");
-      row.appendChild(inputNumber);
+      const selectPoints = document.createElement("select");
+      selectPoints.classList.add("item");
+      row.appendChild(selectPoints);
+      let points = 10;
+      for (let i = 1; i <= points; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        selectPoints.add(option);
+      }
       return row;
     }
 
-    //запись оценок Дмитрия в массив
-    function getJudgeResult() {
-      const numberInputs = document.querySelectorAll('input[type="number"]');
+     //запись оценок Дмитрия в массив
+      const getJudgeResult = () => {
+      const selects = document.querySelectorAll(".wrap--special select");
       const result = [];
-
-      for (let input of numberInputs) {
-        if (input.value === "") {
-          alert("Поставьте оценки");
-          return;
-        }
-        result.push(Number(input.value));
-      }
+      selects.forEach(select => {
+        result.push(Number(select.value));
+      });
       return result;
-    }
+    };
+
 
     button.addEventListener("click", () => {
       const result = getJudgeResult();
       console.log(result);
       this.res = result;
-      console.log(this.res);
       this.setStatus("result");
       this.draw();
     });
 
     container.innerHTML = "";
-    box.appendChild(table);
-    box.appendChild(button);
+    table.appendChild(wrap);
+    table.appendChild(button);
     container.appendChild(title);
-    container.appendChild(box);
+    container.appendChild(table);
   }
 
   drawResult() {
