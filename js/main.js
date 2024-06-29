@@ -249,6 +249,7 @@ class Competition {
       const inputText = document.createElement("input");
       inputText.classList.add("item");
       inputText.type = "text";
+      inputText.readOnly = "true";
       inputText.placeholder = `Участник${index + 1}`;
       inputText.value = `${participant}`;
       row.appendChild(inputText);
