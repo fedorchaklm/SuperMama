@@ -9,6 +9,7 @@ class Competition {
     this.marks = [];
     this.res = [];
     this.container = document.querySelector(".container");
+    this.body = document.body;
   }
 
   setStatus(state) {
@@ -122,25 +123,30 @@ class Competition {
       main += "</div>";
     });
     const html = `
-    <h2 class="form__heading">Таблиця оцінок</h2>
-    <form class="form" id="voteForm">
-    <div class="wrap" id="wrap">
-        <div class="row">
-          <div class="form__item">
-            <span>Участниці/</span>
-            <span >Судді</span>
+    <div class="competitors_table">
+    <div class="form_container">
+      <h2 class="form__heading">Таблиця оцінок</h2>
+      <form class="form" id="voteForm">
+      <div class="wrap" id="wrap">
+          <div class="row">
+            <div class="form__item">
+              <span>Участниці/</span>
+              <span >Судді</span>
+            </div>
+            ${judjesItems}
           </div>
-          ${judjesItems}
+          ${main}
         </div>
-        ${main}
+        <div class="container container-sm">
+          <input type="button" value="+">
+          <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
+        </div>
+        </form>
+        </div>
       </div>
-      <div class="container container-sm">
-        <input type="button" value="+">
-        <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
-      </div>
-      </form>
     `;
-    this.container.innerHTML = html;
+    //this.container.innerHTML = html;
+    this.body.innerHTML = html; 
     const addParticipantBtn = document.querySelector('input[type="button"]');
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
@@ -198,6 +204,9 @@ class Competition {
 
   judgesPoints() {
     const container = document.querySelector(".container");
+
+    const containerKarpachovPage = document.createElement('div');
+    containerKarpachovPage.classList.add('contKarpNotes');
     //заголовок
     const title = document.createElement("h2");
     title.classList.add("form__heading");
@@ -286,25 +295,37 @@ class Competition {
       this.draw();
     });
 
-    container.innerHTML = "";
+    this.body.innerHTML = '';
     table.appendChild(wrap);
     table.appendChild(button);
-    container.appendChild(title);
-    container.appendChild(table);
+
+    containerKarpachovPage.appendChild(title);
+    containerKarpachovPage.appendChild(table);
+
+    this.body.appendChild(containerKarpachovPage);
   }
 
   drawResult() {
     const points = totalPoints(this.marks, this.res);
     const standings = getStandings(this.participants, points);
-    let html = "";
-    standings.forEach(({ participant, mark }) => {
-      html += `
-      <div>
-      <span style="color:#fff; font-size: 5rem">${participant} : ${mark}</span>
+    let compResults = "";
+    for(let participant = 0; participant < standings.length; participant++) {
+      compResults +=
+      `
+      <div class="winner">
+        <div class="winner_result">${participant + 1}</div>
+        <input class="winner_desc" type="text" value=" ${standings[participant].participant} : ${standings[participant].mark}"></input>
       </div>
-      `;
-    });
-    this.container.innerHTML = html;
+      `
+    }
+    let html = "";
+    html += `
+      <div class="gameResult">
+        <h2 class="gameResult__heading">Наші Переможці:</h2>
+        <div class="winnerList">${compResults}</div>
+      </div>
+    `;
+    this.body.innerHTML = html; 
   }
 
   draw() {
