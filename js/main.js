@@ -10,7 +10,6 @@ class Competition {
     this.res = [];
     this.container = document.querySelector(".container");
     
-    //this.body = document.querySelector("body");
     this.body = document.body;
   }
 
@@ -125,25 +124,30 @@ class Competition {
       main += "</div>";
     });
     const html = `
-    <h2 class="form__heading">Таблиця оцінок</h2>
-    <form class="form" id="voteForm">
-    <div class="wrap" id="wrap">
-        <div class="row">
-          <div class="form__item">
-            <span>Участниці/</span>
-            <span >Судді</span>
+    <div class="competitors_table">
+      <div class="form_container">
+      <h2 class="form__heading">Таблиця оцінок</h2>
+      <form class="form" id="voteForm">
+      <div class="wrap" id="wrap">
+          <div class="row">
+            <div class="form__item">
+              <span>Участниці/</span>
+              <span >Судді</span>
+            </div>
+            ${judjesItems}
           </div>
-          ${judjesItems}
+          ${main}
         </div>
-        ${main}
+        <div class="container container-sm">
+          <input type="button" value="+">
+          <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
+        </div>
+        </form>
       </div>
-      <div class="container container-sm">
-        <input type="button" value="+">
-        <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
       </div>
-      </form>
     `;
-    this.container.innerHTML = html;
+    //this.container.innerHTML = html;
+    this.body.innerHTML = html; 
     const addParticipantBtn = document.querySelector('input[type="button"]');
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
@@ -200,6 +204,9 @@ class Competition {
 
   judgesPoints() {
     const container = document.querySelector('.container');
+
+    const containerKarpachovPage = document.createElement('div');
+    containerKarpachovPage.classList.add('contKarpNotes');
     //заголовок
     const title = document.createElement('h2');
     title.classList.add('title');
@@ -297,44 +304,37 @@ class Competition {
         this.draw();
     });
     
-    container.innerHTML = '';
+    this.body.innerHTML = '';
     box.appendChild(table);
     box.appendChild(button);
-    container.appendChild(title);
-    container.appendChild(box);
+
+    containerKarpachovPage.appendChild(title);
+    containerKarpachovPage.appendChild(box);
+    
+    this.body.appendChild(containerKarpachovPage);
   }
 
   drawResult() {
-   
     const points = totalPoints(this.marks, this.res);
     const standings = getStandings(this.participants, points);
-    let compResults;
+    let compResults = "";
     for(let participant = 0; participant < standings.length; participant++) {
-      // console.log(participant + 1);
-      // console.log(standings[participant].participant);
-      // console.log(standings[participant].mark);
       compResults +=
       `
-      <div class="winnerPlace">${participant + 1}</div>
-      <input class="winner" type="text" value="${standings[participant].participant} : ${standings[participant].mark}"></input>
+      <div class="winner">
+        <div class="winner_result">${participant + 1}</div>
+        <input class="winner_desc" type="text" value=" ${standings[participant].participant} : ${standings[participant].mark}"></input>
+      </div>
       `
     }
-
-    // standings.forEach(({ participant, mark }) => {
-    //   compResults += `
-    //     <input class="winner" type="text" value="${standings.indexOf(participant)} ${participant} : ${mark}"></input>
-    //   `;
-    // });
-
     let html = "";
     html += `
       <div class="gameResult">
-        <h2 class="form__heading">Our Winners</h2>
+        <h2 class="gameResult__heading">Наші Переможці:</h2>
         <div class="winnerList">${compResults}</div>
       </div>
     `;
-    this.body.innerHTML = html;
-    
+    this.body.innerHTML = html; 
   }
 
   draw() {
