@@ -249,3 +249,12 @@ input[type="button"] {
   text-align: center;
   padding-left: 72px;
 }
+
+input[type="button"].add_judge {
+  background-image: url('../images/judge_add.png');
+  background-size: 60%; 
+  padding-left: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+}
