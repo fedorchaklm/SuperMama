@@ -135,7 +135,10 @@ class Competition {
         ${main}
       </div>
       <div class="container container-sm">
-        <input type="button" value="+">
+       <div class="container__add container-sm">
+          <input type="button" value="+">
+          <input type="button" class="add_judge"> 
+        </div>
         <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
       </div>
       </form>
@@ -177,6 +180,42 @@ class Competition {
      `;
       wrap.appendChild(addedRow);
     });
+
+    const addJudgetBtn = document.querySelector('.add_judge');
+    addJudgetBtn.addEventListener('click', () => {
+    const wrap = document.querySelector("#wrap");
+    const judges_len = this.judjes.length;
+    this.judjes.push(`Суддя ${judges_len + 1}`);
+    const headerRow = wrap.querySelector(".row:first-child");
+    const newJudgeInput = document.createElement("input");
+    newJudgeInput.type = "text";
+    newJudgeInput.className = "form__item";
+    newJudgeInput.name = `judge-${judges_len}`;
+    newJudgeInput.value = `Суддя ${judges_len + 1}`;
+    headerRow.appendChild(newJudgeInput);
+    this.participants.forEach((participant, i) => {
+      const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
+      const addedCol = document.createElement("select");
+      addedCol.className = "form__item";
+      addedCol.name = `mark-${i}-${judges_len}`;
+      addedCol.required = true;
+      addedCol.innerHTML = `
+        <option label="Бали" value=""></option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      `;
+      participantRow.appendChild(addedCol);
+    });
+});
+
     const voteForm = document.querySelector("#voteForm");
     voteForm.addEventListener("submit", (event) => {
       event.preventDefault();
