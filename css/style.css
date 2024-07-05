@@ -25,17 +25,17 @@ body {
 .container-sm {
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  width: 31%;
   padding-inline: 10px;
 }
 
 .form,
 .form-init {
+  display: flex;
   flex-direction: column;
   gap: 40px;
   padding: 20px;
   background: rgba(246, 225, 225, 0.297);
-  border-radius: 10px;
 }
 
 .form-init {
@@ -83,6 +83,8 @@ h3 {
   padding: 10px;
   border-radius: 10px;
   background: #a24f63;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .row {
@@ -140,10 +142,10 @@ h3 {
   min-height: 100vh;
 }
 
-.form_container {
+/* .form_container {
   width: 72%;
   margin: auto;
-}
+} */
 
 input {
   text-overflow: ellipsis;

@@ -124,7 +124,7 @@ class Competition {
     });
     const html = `
     <div class="competitors_table">
-    <div class="form_container">
+    
       <h2 class="form__heading">Таблиця оцінок</h2>
       <form class="form" id="voteForm">
       <div class="wrap" id="wrap">
