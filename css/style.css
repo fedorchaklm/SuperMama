@@ -258,3 +258,18 @@ input[type="button"].add_judge {
   background-repeat: no-repeat;
   border: none;
 }
+
+.popup { /* changed */
+  position: fixed;
+  width: 30%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  background-color: #ffffff; 
+  border: 1px solid #cccccc; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  z-index: 1000;
+  text-align: center;
+  border-radius: 10px;
+}

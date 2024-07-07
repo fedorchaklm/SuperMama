@@ -82,7 +82,7 @@ class Competition {
     initForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const participantsNumber = document.querySelector("#participantsNumber");
-      const judjesNumber = document.querySelector("#judjesNumber");
+      let judjesNumber = document.querySelector("#judjesNumber");
       this.setParticipants(participantsNumber.value);
       this.setJudjes(judjesNumber.value);
       this.setStatus("playing");
@@ -91,6 +91,7 @@ class Competition {
   }
 
   drawPlaying() {
+
     const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
@@ -189,38 +190,50 @@ class Competition {
 
     const addJudgetBtn = document.querySelector('.add_judge');
     addJudgetBtn.addEventListener('click', () => {
-    const wrap = document.querySelector("#wrap");
-    const judges_len = this.judjes.length;
-    this.judjes.push(`Суддя ${judges_len + 1}`);
-    const headerRow = wrap.querySelector(".row:first-child");
-    const newJudgeInput = document.createElement("input");
-    newJudgeInput.type = "text";
-    newJudgeInput.className = "form__item";
-    newJudgeInput.name = `judge-${judges_len}`;
-    newJudgeInput.value = `Суддя ${judges_len + 1}`;
-    headerRow.appendChild(newJudgeInput);
-    this.participants.forEach((participant, i) => {
-      const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
-      const addedCol = document.createElement("select");
-      addedCol.className = "form__item";
-      addedCol.name = `mark-${i}-${judges_len}`;
-      addedCol.required = true;
-      addedCol.innerHTML = `
-        <option label="Бали" value=""></option>
-        <option value="1" selected>1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      `;
-      participantRow.appendChild(addedCol);
-    });
-});
+      const judges_len = this.judjes.length;
+      if(judges_len < 10){
+          const wrap = document.querySelector("#wrap");
+          this.judjes.push(`Суддя ${judges_len + 1}`);
+          const headerRow = wrap.querySelector(".row:first-child");
+          const newJudgeInput = document.createElement("input");
+          newJudgeInput.type = "text";
+          newJudgeInput.className = "form__item";
+          newJudgeInput.name = `judge-${judges_len}`;
+          newJudgeInput.value = `Суддя ${judges_len + 1}`;
+          headerRow.appendChild(newJudgeInput);
+          this.participants.forEach((participant, i) => {
+            const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
+            const addedCol = document.createElement("select");
+            addedCol.className = "form__item";
+            addedCol.name = `mark-${i}-${judges_len}`;
+            addedCol.required = true;
+            addedCol.innerHTML = `
+              <option label="Бали" value=""></option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            `;
+            participantRow.appendChild(addedCol);
+          });
+      } else {
+        console.log(`Error, ${judges_len}`);
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+        popup.textContent = `Mаксимальна кількість суддів - 10`;
+        document.body.appendChild(popup);
+        setTimeout(() => {
+          popup.remove();
+        }, 3000);
+      }
+  }
+);
 
     const voteForm = document.querySelector("#voteForm");
     voteForm.addEventListener("submit", (event) => {
