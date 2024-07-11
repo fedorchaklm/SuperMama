@@ -1,3 +1,8 @@
+/* 481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
 body {
   background-image: url("../images/bg_main.png");
   background-size: cover;
@@ -17,31 +22,6 @@ body {
   justify-content: center;
 }
 
-.container {
-  flex-direction: column;
-  gap: 100px;
-}
-
-.container-sm {
-  flex-direction: row;
-  justify-content: space-between;
-  width: 31%;
-  padding-inline: 10px;
-}
-
-.form,
-.form-init {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 20px;
-  background: rgba(246, 225, 225, 0.297);
-}
-
-.form-init {
-  gap: 20px;
-}
-
 h1,
 h2,
 h3 {
@@ -50,33 +30,11 @@ h3 {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-h1 {
-  -webkit-text-stroke-width: 1;
-  -webkit-text-stroke-color: #000;
-  font-size: 6rem;
-  padding-top: 80px;
-}
-
-h2 {
-    font-size: 4rem;
-}
-
-h3 {
-  font-size: 2rem;
-}
-
-.form__heading {
-  color: #fff;
-  text-align: center;
-  font-size: 4rem;
-  padding: 100px;
-}
-
 .wrap,
-.table {
-  flex-direction: column;
-  gap: 20px;
-}
+  .table {
+    flex-direction: column;
+    gap: 20px;
+  }
 
 .wrap {
   display: flex;
@@ -87,191 +45,733 @@ h3 {
   flex-shrink: 1;
 }
 
-.row {
-  display: flex;
-  gap: 10px;
-}
-
 .form__item,
-.item {
-  padding: 8px;
-  font-size: 2rem;
-  text-align: center;
-  color: #670931;
-  border-radius: 10px;
-  border: 0;
-  box-sizing: border-box;
-}
+  .item {
+    padding: 1px;
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+    width: 50%;
+    background: rgba(149, 164, 217, 1);
+  }
 
-.form__item {
-  width: 245px;
-  background: rgba(246, 225, 225, 0.86);
-}
+  .item__note {
+    width: 150px;
+    padding: 8px;
+    text-align: center;
+    color: #670931;
+    background: rgba(149, 164, 217, 1);
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    margin: 0px 5px;
+  }
 
-.form__item--empty {
-  background: #a24f63;
-}
+  .item__note--judje {
+    width: 150px;
+    padding: 14px;
+    text-align: center;
+    color: #670931;
+    background: rgba(149, 164, 217, 1);
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 1.7rem;
+    margin: 0px 5px;
+  }
 
-.form__btn {
+  .form__item {
+    width: 60px;
+    background: rgba(246, 225, 225, 0.86);
+  }
+
+  .form__item--participant,
+  .form__item--judje {
+    width: 100px;
+    padding: 1px;
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+
+  .form__item--empty {
+    background: #a24f63;
+  }
+
+  .competitors_table {
+    background-image: url("../images/bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: "Lobster", sans-serif;
+    min-height: 100vh;
+  }
+
+  .contKarpNotes {
+    background-image: url("../images/bg_karpachev.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: "Lobster", sans-serif;
+    min-height: 100vh;
+  }
+
+  input {
+    text-overflow: ellipsis;
+  }
+
+  .table {
+    border-radius: 10px;
+    padding: 20px 15px;
+    margin-right: 36%;
+    margin-left: 10%;
+    background: rgba(60, 83, 163, 0.87);
+  }
+
+  .wrap--special{
+    background: rgba(116, 87, 163, 1);
+  }
+
+  .link:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 2px #ee0adb;
+  }
+
+  .item {
+    width: 50%;
+    background: rgba(149, 164, 217, 1);
+  }
+
+  .gameResult {
+    background-image: url("../images/winners.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-family: "Lobster", sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .winnerList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 62px;
+  }
+
+  .winner {
+    display: flex;
+    flex-direction: row;
+  }
+
+@media screen and (max-width: 768px) {
+    
+  .container {
+    flex-direction: column;
+    gap: 100px;
+  }
+  
+  .container-sm {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 55%;
+    padding-inline: 10px;
+  }
+  
+  .form,
+  .form-init {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    background: rgba(246, 225, 225, 0.297);
+  }
+  
+  .form-init {
+    gap: 20px;
+  }
+  
+  h1 {
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: #000;
+    font-size: 3rem;
+    padding-top: 80px;
+  }
+  
+  h2 {
+      font-size: 2.5rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
+  }
+  
+  .form__heading {
+    color: #fff;
+    text-align: center;
+    font-size: 4rem;
+    padding: 100px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 2px;
+  }
+
+  .form__item--judje {
+    width: 65px;
+  }
+
+  .form__desc {
+    color:white;
+    font-size: 1.1rem;
+  }
+
+  .form__item--marks {
+    margin: 0px 2.6px;
+    width: 60px;
+    padding: 1px;
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  .form__item--register {
+    width: 280px;
+    background: rgba(246, 225, 225, 0.86);
+    padding: 10px;
+    font-size: 2rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  .form__btn {
   border-radius: 40px;
   background: #aa044a;
   font-family: "Lobster";
-  padding: 20px;
+  padding: 14px;
   color: #fff;
   text-align: center;
-  font-size: 1.5rem;
-  align-self: flex-end;
+  font-size: 1.3rem;
   width: 245px;
   border: 0;
   cursor: pointer;
+  }
+  
+  .button {
+    padding: 20px 0;
+  }
+ 
+  .link--finalVote{
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    color: white;
+    background: #AA044A;
+  }
+  
+  input[type="button"] {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 50%;
+    background: #aa044a;
+    border: 0px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .gameResult__heading {
+    text-align: left;
+    margin: 64px 20px 84px 100px;
+    font-size: 3rem;
+  }
+  
+
+  
+  
+  
+  .winner_result {
+    background-color: #77102a;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    width: 98px;
+    position: absolute;
+    border-radius: 10px;
+    font-size: 35px;
+  }
+  
+  .winner_desc {
+    font-size: 1.5rem;
+    width: 300px;
+    padding: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: #FEF2DE;
+    text-align: center;
+    padding-left: 72px;
+  }
+  
+  input[type="button"].add_judge {
+    background-image: url('../images/judge_add.png');
+    background-size: 60%; 
+    padding-left: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+  }
+  
+  .popup { /* changed */
+    position: fixed;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    background-color: #ffffff; 
+    border: 1px solid #cccccc; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+    text-align: center;
+    border-radius: 10px;
+  }
 }
 
-.competitors_table {
-  background-image: url("../images/bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  font-family: "Lobster", sans-serif;
-  min-height: 100vh;
-}
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  
+  .container {
+    flex-direction: column;
+    gap: 151px;
+  }
+  
+  .container-sm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 71%;
+    padding-inline: 70px;
+    padding-left: 42px;
+  }
+  
+  .form,
+  .form-init {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+    background: rgba(246, 225, 225, 0.297);
+  }
+  
+  .form-init {
+    gap: 40px;
+  }
+  
+  h1 {
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: #000;
+    font-size: 5rem;
+    padding-top: 80px;
+  }
+  
+  h2 {
+      font-size: 3rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
+  }
+  
+  .form__heading {
+    color: #fff;
+    text-align: center;
+    font-size: 4rem;
+    padding: 100px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 6px;
+  }
 
-.contKarpNotes {
-  background-image: url("../images/bg_karpachev.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  font-family: "Lobster", sans-serif;
-  min-height: 100vh;
-}
+  .form__item--participant,
+  .form__item--judje {
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
 
-/* .form_container {
-  width: 72%;
-  margin: auto;
-} */
+  .form__item--judje {
+    width: 100px;
+    padding: 5px;
+  }
 
-input {
-  text-overflow: ellipsis;
-}
+  .form__item--participant {
+    width: 110px;
+    padding: 6px;
+  }
 
-.table {
-  border-radius: 10px;
-  padding: 20px 15px;
-  margin-right: 51%;
-  margin-left: 10%;
-  margin-bottom: 100px;
-  background: rgba(60, 83, 163, 0.87);
-}
+  .form__desc {
+    color:white;
+    font-size: 1.1rem;
+  }
 
-.wrap--special{
-  background: rgba(116, 87, 163, 1);
-}
-
-.button {
-  padding: 20px 0;
-}
-
-.link {
-  padding: 20px 30px;
+  .form__item--marks {
+    margin: 0px 5.1px;
+    width: 90px;
+    padding: 1px;
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  .form__item--register {
+    width: 280px;
+    background: rgba(246, 225, 225, 0.86);
+    padding: 10px;
+    font-size: 2rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  .form__btn {
   border-radius: 40px;
-  font-size: 1.5rem;
-  white-space: nowrap;
-  color: white;
-  background: #AA044A;
-}
-
-.link:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 10px 2px #ee0adb;
-}
-
-.item {
-  width: 50%;
-  background: rgba(149, 164, 217, 1);
-}
-
-input[type="button"] {
-  width: 50px;
-  height: 50px;
-  color: #fff;
-  border-radius: 50%;
   background: #aa044a;
-  border: 2px solid #a24f63;
+  font-family: "Lobster";
+  padding: 14px;
+  color: #fff;
+  text-align: center;
+  font-size: 1.6rem;
+  width: 245px;
+  border: 0;
   cursor: pointer;
-  font-size: 1.5rem;
-  text-align: center;
+  }
+  
+  .button {
+    padding: 20px 0;
+  }
+ 
+  .link--finalVote{
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-size: 1.6rem;
+    white-space: nowrap;
+    color: white;
+    background: #AA044A;
+  }
+  
+  input[type="button"] {
+    width: 55px;
+    height: 55px;
+    color: #fff;
+    border-radius: 50%;
+    background: #aa044a;
+    border: 0px;
+    cursor: pointer;
+    font-size: 1.7rem;
+    text-align: center;
+    margin: 0px 5px;
+  }
+  
+  .gameResult__heading {
+    text-align: left;
+    margin: 64px 20px 84px 100px;
+    font-size: 3rem;
+  }
+  
+  .winner_result {
+    background-color: #77102a;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    width: 98px;
+    position: absolute;
+    border-radius: 10px;
+    font-size: 35px;
+  }
+  
+  .winner_desc {
+    font-size: 1.5rem;
+    width: 300px;
+    padding: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: #FEF2DE;
+    text-align: center;
+    padding-left: 72px;
+  }
+  
+  input[type="button"].add_judge {
+    background-image: url('../images/judge_add.png');
+    background-size: 60%; 
+    padding-left: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+  }
+  
+  .popup { /* changed */
+    position: fixed;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    background-color: #ffffff; 
+    border: 1px solid #cccccc; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+    text-align: center;
+    border-radius: 10px;
+  }
+
 }
 
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  
+  .container {
+    flex-direction: column;
+    gap: 151px;
+  }
+  
+  .container-sm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 58%;
+    padding-inline: 70px;
+    padding-left: 42px;
+  }
+  
+  .form,
+  .form-init {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 30px;
+    background: rgba(246, 225, 225, 0.297);
+  }
+  
+  .form-init {
+    gap: 40px;
+  }
+  
+  h1 {
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: #000;
+    font-size: 7rem;
+    padding-top: 80px;
+  }
+  
+  h2 {
+      font-size: 4rem;
+  }
+  
+  h3 {
+    font-size: 4rem;
+  }
+  
+  .form__heading {
+    color: #fff;
+    text-align: center;
+    font-size: 5rem;
+    padding: 100px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 6px;
+  }
 
+  .item__note {
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    color: #670931;
+    background: rgba(149, 164, 217, 1);
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 2rem;
+    margin: 0px 5px;
+  }
 
-.gameResult {
-  background-image: url("../images/winners.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  font-family: "Lobster", sans-serif;
-  min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
+  .item__note--judje {
+    width: 200px;
+    padding: 20px;
+    text-align: center;
+    color: #670931;
+    background: rgba(149, 164, 217, 1);
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+    font-size: 2.2rem;
+    margin: 0px 5px;
+  }
 
-.gameResult__heading {
-  text-align: left;
-  margin: 64px 20px 84px 100px;
-  font-size: 100px;
-}
+  .form__item--participant,
+  .form__item--judje {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
 
-.winnerList {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-left: 62px;
-}
+  .form__item--judje {
+    width: 100px;
+    padding: 5px;
+  }
 
-.winner {
-  display: flex;
-  flex-direction: row;
-}
+  .form__item--participant {
+    width: 150px;
+    padding: 6px;
+  }
 
-.winner_result {
-  background-color: #77102a;
-  text-align: center;
-  color: white;
-  padding: 17px;
-  width: 114px;
-  position: absolute;
-  border-radius: 10px;
-  font-size: 58px; 
-}
+  .form__desc {
+    color:white;
+    font-size: 1.8rem;
+  }
 
-.winner_desc {
-  font-size: 40px;
-  width: 389px;
-  padding: 23px;
-  border-radius: 10px;
-  border: none;
-  background-color: #FEF2DE;
-  text-align: center;
-  padding-left: 72px;
-}
+  .form__item--marks {
+    margin: 0px 5.1px;
+    width: 90px;
+    padding: 1px;
+    font-size: 1rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  .form__item--register {
+    width: 280px;
+    background: rgba(246, 225, 225, 0.86);
+    padding: 15px;
+    font-size: 2rem;
+    text-align: center;
+    color: #670931;
+    border-radius: 10px;
+    border: 0;
+    box-sizing: border-box;
+  }
+  
+  .form__btn {
+    border-radius: 40px;
+    background: #aa044a;
+    font-family: "Lobster";
+    padding: 22px;
+    color: #fff;
+    text-align: center;
+    font-size: 2rem;
+    width: 285px;
+    border: 0;
+    cursor: pointer;
+  }
 
-input[type="button"].add_judge {
-  background-image: url('../images/judge_add.png');
-  background-size: 60%; 
-  padding-left: 10px;
-  background-position: center;
-  background-repeat: no-repeat;
-  border: none;
-}
+  .button {
+    padding: 20px 0;
+  }
+ 
+  .link--finalVote{
+    padding: 25px 20px;
+    border-radius: 40px;
+    font-size: 2rem;
+    white-space: nowrap;
+    color: white;
+    background: #AA044A;
+  }
+  
+  input[type="button"] {
+    width: 80px;
+    height: 80px;
+    color: #fff;
+    border-radius: 50%;
+    background: #aa044a;
+    border: 0px;
+    cursor: pointer;
+    font-size: 3rem;
+    text-align: center;
+    margin: 0px 5px;
+  }
+  
+  .gameResult__heading {
+    text-align: left;
+    margin: 64px 20px 84px 100px;
+    font-size: 5rem;
+  }
+  
+  .winner_result {
+    background-color: #77102a;
+    text-align: center;
+    color: white;
+    padding: 19px;
+    width: 106px;
+    position: absolute;
+    border-radius: 10px;
+    font-size: 50px;
+  }
+  
+  .winner_desc {
+    font-size: 2rem;
+    width: 312px;
+    padding: 25px;
+    border-radius: 10px;
+    border: none;
+    background-color: #FEF2DE;
+    text-align: center;
+    padding-left: 72px;
+  }
+  
+  input[type="button"].add_judge {
+    background-image: url('../images/judge_add.png');
+    background-size: 60%; 
+    padding-left: 10px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+  }
+  
+  .popup { /* changed */
+    position: fixed;
+    width: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px;
+    background-color: #ffffff; 
+    border: 1px solid #cccccc; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+    text-align: center;
+    border-radius: 10px;
+  }
 
-.popup { /* changed */
-  position: fixed;
-  width: 30%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 30px;
-  background-color: #ffffff; 
-  border: 1px solid #cccccc; 
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-  z-index: 1000;
-  text-align: center;
-  border-radius: 10px;
 }

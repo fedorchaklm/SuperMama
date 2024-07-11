@@ -16,16 +16,6 @@ class Competition {
     this.status = state;
   }
 
-  // setPropertyArray(property, number, text) {
-  //   for (let i = 0; i < number; i++) {
-  //     this[property][i] = `${text}${i + 1}`;
-  //   }
-  // }
-
-  // setParticipants(participantsNumber) {
-  //   this.setPropertyArray("participants", participantsNumber, "Участник");
-  // }
-
   setParticipants(participantsNumber) {
     for (let i = 0; i < participantsNumber; i++) {
       this.participants[i] = `Участник${i + 1}`;
@@ -44,7 +34,7 @@ class Competition {
     <h2>Реєстрація суддів та учасниць:</h2>
     <form action="#" class="form-init" id="initForm">
       <h3>Судді:</h3>
-      <select class="form__item" name="judjesNumber" id="judjesNumber" required>
+      <select class="form__item--register" name="judjesNumber" id="judjesNumber" required>
        <option label="Кількість" value=""></option>
        <option value="1">1</option>
        <option value="2">2</option>
@@ -58,7 +48,7 @@ class Competition {
        <option value="10">10</option>
       </select>
       <h3>Участниці:</h3>
-      <select class="form__item" name="participantsNumber" id="participantsNumber" required>
+      <select class="form__item--register" name="participantsNumber" id="participantsNumber" required>
        <option label="Кількість" value=""></option>
        <option value="1">1</option>
        <option value="2">2</option>
@@ -95,30 +85,32 @@ class Competition {
     const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
-        `<input type="text" class="form__item" name="judje-${index}" value="${item}">`
+        `<input type="text" class="form__item--judje" name="judje-${index}" value="${item}">`
       );
     }, "");
     let main = "";
     this.participants.forEach((participant, i) => {
       main += `
       <div class="row">
-      <input type="text" class="form__item" name="participant-${i}" value="${participant}">
+      <input type="text" class="form__item--participant" name="participant-${i}" value="${participant}">
       `;
       this.judjes.forEach((judje, j) => {
         main += `
-      <select class="form__item" name="mark-${i}-${j}" required>
-      <option label="Бали" value=""></option>
-      <option value="1" selected>1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
+        
+          <select class="form__item--marks" name="mark-${i}-${j}" required>
+          <option label="Бали" value=""></option>
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          </select>
+      
       `;
       });
       main += "</div>";
@@ -130,9 +122,9 @@ class Competition {
       <form class="form" id="voteForm">
       <div class="wrap" id="wrap">
           <div class="row">
-            <div class="form__item">
-              <span>Участниці/</span>
-              <span >Судді</span>
+            <div class="form__item--participant">
+              <span class="form__desc">Участниці/</span>
+              <span class="form__desc">Судді</span>
             </div>
             ${judjesItems}
           </div>
@@ -159,7 +151,7 @@ class Competition {
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
-      <select class="form__item" name="mark-${index}-${j + 1}" required>
+      <select class="form__item--marks" name="mark-${index}-${j + 1}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
@@ -179,7 +171,7 @@ class Competition {
       addedRow.innerHTML +=  `
       <input 
         type="text" 
-        class="form__item" 
+        class="form__item--participant" 
         name="participant-${index}" 
         value="${this.participants[index]}"
         >
@@ -197,14 +189,14 @@ class Competition {
           const headerRow = wrap.querySelector(".row:first-child");
           const newJudgeInput = document.createElement("input");
           newJudgeInput.type = "text";
-          newJudgeInput.className = "form__item";
+          newJudgeInput.className = "form__item--judje";
           newJudgeInput.name = `judge-${judges_len}`;
           newJudgeInput.value = `Суддя ${judges_len + 1}`;
           headerRow.appendChild(newJudgeInput);
           this.participants.forEach((participant, i) => {
             const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
             const addedCol = document.createElement("select");
-            addedCol.className = "form__item";
+            addedCol.className = "form__item--marks";
             addedCol.name = `mark-${i}-${judges_len}`;
             addedCol.required = true;
             addedCol.innerHTML = `
@@ -270,7 +262,7 @@ class Competition {
     const button = document.createElement("div");
     button.classList.add("button");
     const link = document.createElement("a");
-    link.classList.add("link");
+    link.classList.add("link--finalVote");
     link.textContent = "Результати голосування";
     button.appendChild(link);
 
@@ -282,7 +274,7 @@ class Competition {
     const rowSpesial = document.createElement("div");
     rowSpesial.classList.add("row");
     const item = document.createElement("div");
-    item.classList.add("item");
+    item.classList.add("item__note--judje");
     rowSpesial.appendChild(item);
     const span = document.createElement("span");
     span.textContent = "Учасниці/";
@@ -293,7 +285,7 @@ class Competition {
 
     const itemJudje = document.createElement("div");
     itemJudje.textContent = "Дмитро Карпачов";
-    itemJudje.classList.add("item");
+    itemJudje.classList.add("item__note--judje");
     rowSpesial.appendChild(itemJudje);
     wrap.appendChild(rowSpesial);
 
@@ -308,7 +300,7 @@ class Competition {
       row.classList.add("row");
 
       const inputText = document.createElement("input");
-      inputText.classList.add("item");
+      inputText.classList.add("item__note");
       inputText.type = "text";
       inputText.readOnly = "true";
       inputText.placeholder = `Участник${index + 1}`;
@@ -316,7 +308,7 @@ class Competition {
       row.appendChild(inputText);
 
       const selectPoints = document.createElement("select");
-      selectPoints.classList.add("item");
+      selectPoints.classList.add("item__note");
       row.appendChild(selectPoints);
       let points = 10;
       for (let i = 1; i <= points; i++) {
