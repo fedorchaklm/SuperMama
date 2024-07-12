@@ -117,29 +117,29 @@ class Competition {
     });
     const html = `
     <div class="competitors_table">
-    
       <h2 class="form__heading">Таблиця оцінок</h2>
       <form class="form" id="voteForm">
-      <div class="wrap" id="wrap">
+      <div class="main-wrap">
+        <div class="wrap" id="wrap">
           <div class="row">
             <div class="form__item--participant">
-              <span class="form__desc">Участниці/</span>
-              <span class="form__desc">Судді</span>
+            <span class="form__desc">Судді/</span>
+              <span class="form__desc">Участниці</span>
             </div>
             ${judjesItems}
           </div>
           ${main}
         </div>
         <div class="container container-sm">
-         <div class="container__add container-sm">
-          <input type="button" value="+">
+          <div class="container container-sm container-add">
+            <input type="button" value="+">
             <input type="button" class="add_judge"> 
-        </div>
-        <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
-        </div>
-        </form>
+          </div>
+          <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
         </div>
       </div>
+      </form>
+    </div>
     `;
     //this.container.innerHTML = html;
     this.body.innerHTML = html; 
@@ -222,7 +222,7 @@ class Competition {
         document.body.appendChild(popup);
         setTimeout(() => {
           popup.remove();
-        }, 3000);
+        }, 2000);
       }
   }
 );
@@ -247,7 +247,7 @@ class Competition {
   }
 
   judgesPoints() {
-    const container = document.querySelector(".container");
+    // const container = document.querySelector(".container");
 
     const containerKarpachovPage = document.createElement('div');
     containerKarpachovPage.classList.add('contKarpNotes');
@@ -258,7 +258,7 @@ class Competition {
 
     const wrap = document.createElement("div");
     wrap.classList.add("wrap", "wrap--special");
-    //кнопка результаты голосования
+    //кнопка результати голосування
     const button = document.createElement("div");
     button.classList.add("button");
     const link = document.createElement("a");
@@ -266,21 +266,21 @@ class Competition {
     link.textContent = "Результати голосування";
     button.appendChild(link);
 
-    //таблица
+    //таблиця
     const table = document.createElement("div");
     table.classList.add("table");
 
-    //шапка таблицы
+    //шапка таблиці
     const rowSpesial = document.createElement("div");
     rowSpesial.classList.add("row");
     const item = document.createElement("div");
     item.classList.add("item__note--judje");
     rowSpesial.appendChild(item);
     const span = document.createElement("span");
-    span.textContent = "Учасниці/";
+    span.textContent = "Суддя/";
     item.appendChild(span);
     const span2 = document.createElement("span");
-    span2.textContent = "Суддя";
+    span2.textContent = "Учасниці";
     item.appendChild(span2);
 
     const itemJudje = document.createElement("div");
@@ -294,7 +294,7 @@ class Competition {
       wrap.appendChild(row);
     });
 
-    //формирования таблицы
+    //формування таблиці
     function getRow(participant, index) {
       const row = document.createElement("div");
       row.classList.add("row");
@@ -320,7 +320,6 @@ class Competition {
       return row;
     }
 
-     //запись оценок Дмитрия в массив
       const getJudgeResult = () => {
       const selects = document.querySelectorAll(".wrap--special select");
       const result = [];
@@ -358,7 +357,7 @@ class Competition {
       `
       <div class="winner">
         <div class="winner_result">${participant + 1}</div>
-        <input class="winner_desc" type="text" value=" ${standings[participant].participant} : ${standings[participant].mark}"></input>
+        <input class="winner_desc" type="text" readonly value=" ${standings[participant].participant} : ${standings[participant].mark}"></input>
       </div>
       `
     }
