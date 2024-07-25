@@ -105,9 +105,11 @@ class Competition {
           <select class="form__item--marks" name="mark-${i}-${j}" required>
             <option label="Бали" value=""></option>
             ${[...Array(10).keys()].reduce((acc, item) => {
-          const value = item + 1;
-          return `${acc}<option ${selectedValue === value ? 'selected' : ''} value="${value}">${value}</option>`;
-        }, '')}
+              const value = item + 1;
+              return `${acc}<option ${
+                selectedValue === value ? "selected" : ""
+              } value="${value}">${value}</option>`;
+            }, "")}
           </select>
       `;
       });
@@ -130,8 +132,10 @@ class Competition {
         </div>
         <div class="container container-sm">
           <div class="container container-sm container-add">
-            <input type="button" value="+">
+            <input type="button" value="+" id="addParticipant">
+            <input type="button" value="-" id="removeParticipant">
             <input type="button" class="add_judge"> 
+            <input type="button" id="removeJudje"> 
           </div>
           <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
         </div>
@@ -140,11 +144,15 @@ class Competition {
     </div>
     `;
     this.body.innerHTML = html;
-    const addParticipantBtn = document.querySelector('input[type="button"]');
+    const addParticipantBtn = document.querySelector(
+      'input[type="button"]#addParticipant'
+    );
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
       const index = this.participants.length;
       this.participants.push(`Учасник${index + 1}`);
+      console.log(this.participants);
+      this.participantsNumber++;
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
@@ -177,12 +185,25 @@ class Competition {
       wrap.appendChild(addedRow);
     });
 
+    const removeParticipantBtn = document.querySelector(
+      'input[type="button"]#removeParticipant'
+    );
+    removeParticipantBtn.addEventListener("click", () =>
+      this.removeParticipant()
+    );
+
+    const removeJudjeBtn = document.querySelector(
+      'input[type="button"]#removeJudje'
+    );
+    removeJudjeBtn.addEventListener("click", () => this.removeJudje());
+
     const addJudgetBtn = document.querySelector(".add_judge");
     addJudgetBtn.addEventListener("click", () => {
       const judges_len = this.judjes.length;
       if (judges_len < 10) {
         const wrap = document.querySelector("#wrap");
         this.judjes.push(`Суддя ${judges_len + 1}`);
+        this.judjesNumber++;
         const headerRow = wrap.querySelector(".row:first-child");
         const newJudgeInput = document.createElement("input");
         newJudgeInput.type = "text";
@@ -311,7 +332,7 @@ class Competition {
         selectPoints.add(option);
       }
       return row;
-    }
+    };
 
     this.participants.forEach((participant, index) => {
       const row = getRow(participant, index);
@@ -353,7 +374,8 @@ class Competition {
       compResults += `
       <div class="winner">
         <div class="winner_result">${participant + 1}</div>
-        <input class="winner_desc" type="text" readonly value=" ${standings[participant].participant
+        <input class="winner_desc" type="text" readonly value=" ${
+          standings[participant].participant
         } : ${standings[participant].mark}"></input>
       </div>
       `;
@@ -386,6 +408,41 @@ class Competition {
 
       case "result":
         this.drawResult();
+    }
+  }
+
+  removeParticipant() {
+    const wrap = document.getElementById("wrap");
+    const rows = document.querySelectorAll(".row");
+    // const row = rows[this.participantsNumber];
+    // console.log(row);
+    if (rows.length === 2) {
+      return;
+    } else {
+      wrap.removeChild(wrap.lastChild);
+      this.participants.pop();
+      console.log(this.participants);
+      // this.participantsNumber--;
+      console.log(this.participantsNumber);
+
+      this.save();
+    }
+  }
+
+  removeJudje() {
+    const rows = document.querySelectorAll("#wrap .row");
+    console.log(rows);
+    for (let i = 0; i < rows.length; i++) {
+      const row = document.querySelectorAll('#wrap .row')[i];
+      if (row.childNodes.length === 2) {
+        return;
+      } else {
+        console.log(row.lastChild);
+        row.removeChild(row.lastChild);
+      }
+      this.judjes.pop();
+      this.judjesNumber--;
+      this.save();
     }
   }
 
