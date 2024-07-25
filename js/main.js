@@ -100,19 +100,14 @@ class Competition {
       <input type="text" class="form__item--participant" name="participant-${i}" value="${participant}">
       `;
       this.judjes.forEach((judje, j) => {
-        let selectedValue;
-        if (!this.marksArray) {
-          selectedValue = 1;
-        } else {
-          selectedValue = this.marksArray[i][j];
-        }
+        const selectedValue = !this.marksArray ? 1 : this.marksArray[i][j];
         main += `  
           <select class="form__item--marks" name="mark-${i}-${j}" required>
             <option label="Бали" value=""></option>
             ${[...Array(10).keys()].reduce((acc, item) => {
-              const value = item + 1;
-              return `${acc}<option ${selectedValue === value ? 'selected' : ''} value="${value}">${value}</option>`;
-            }, '')}
+          const value = item + 1;
+          return `${acc}<option ${selectedValue === value ? 'selected' : ''} value="${value}">${value}</option>`;
+        }, '')}
           </select>
       `;
       });
@@ -304,8 +299,7 @@ class Competition {
       const selectPoints = document.createElement("select");
       selectPoints.classList.add("item__note");
       row.appendChild(selectPoints);
-      let points = 10;
-      for (let i = 1; i <= points; i++) {
+      for (let i = 1; i <= 10; i++) {
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -318,7 +312,6 @@ class Competition {
       }
       return row;
     }
-
 
     this.participants.forEach((participant, index) => {
       const row = getRow(participant, index);
