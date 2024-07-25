@@ -1,8 +1,6 @@
 class Competition {
   constructor(name) {
     this.name = name;
-    this.participantsNumber = null;
-    this.judjesNumber = null;
     this.judjes = [];
     this.participants = [];
     this.status = "init";
@@ -17,14 +15,14 @@ class Competition {
     this.status = state;
   }
 
-  setParticipants(participantsNumber) {
-    for (let i = 0; i < participantsNumber; i++) {
+  setParticipants(count) {
+    for (let i = 0; i < count; i++) {
       this.participants[i] = `Учасник${i + 1}`;
     }
   }
 
-  setJudjes(judjesNumber) {
-    for (let i = 0; i < judjesNumber; i++) {
+  setJudjes(count) {
+    for (let i = 0; i < count; i++) {
       this.judjes[i] = `Суддя${i + 1}`;
     }
   }
@@ -72,14 +70,8 @@ class Competition {
     const initForm = document.querySelector("#initForm");
     initForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const participantsNumber = document.querySelector(
-        "#participantsNumber"
-      ).value;
-      this.participantsNumber = participantsNumber;
-      let judjesNumber = document.querySelector("#judjesNumber").value;
-      this.judjesNumber = judjesNumber;
-      this.setParticipants(participantsNumber);
-      this.setJudjes(judjesNumber);
+      this.setParticipants(document.querySelector("#participantsNumber").value);
+      this.setJudjes(document.querySelector("#judjesNumber").value);
       this.save();
       this.setStatus("playing");
       this.draw();
@@ -150,8 +142,6 @@ class Competition {
       const wrap = document.querySelector("#wrap");
       const index = this.participants.length;
       this.participants.push(`Учасник${index + 1}`);
-      console.log(this.participants);
-      this.participantsNumber++;
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
@@ -202,7 +192,6 @@ class Competition {
       if (judges_len < 10) {
         const wrap = document.querySelector("#wrap");
         this.judjes.push(`Суддя ${judges_len + 1}`);
-        this.judjesNumber++;
         const headerRow = wrap.querySelector(".row:first-child");
         const newJudgeInput = document.createElement("input");
         newJudgeInput.type = "text";
@@ -423,7 +412,7 @@ class Competition {
   }
 
   removeJudje() {
-    if (this.judjesNumber <= 1) {
+    if (this.judjes.length <= 1) {
       return;
     }
 
@@ -436,7 +425,6 @@ class Competition {
     }
 
     this.judjes.pop();
-    this.judjesNumber--;
     this.save();
   }
 
@@ -444,8 +432,6 @@ class Competition {
     const data = JSON.parse(localStorage.getItem("competition"));
 
     this.name = data.name;
-    this.participantsNumber = data.participantsNumber;
-    this.judjesNumber = data.judjesNumber;
     this.judjes = data.judjes;
     this.participants = data.participants;
     this.status = data.status;
@@ -457,8 +443,6 @@ class Competition {
   save() {
     const data = {
       name: this.name,
-      participantsNumber: this.participantsNumber,
-      judjesNumber: this.judjesNumber,
       judjes: this.judjes,
       participants: this.participants,
       status: this.status,
@@ -471,7 +455,7 @@ class Competition {
 }
 
 function getMarks(formObj) {
-    const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
+  const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
   return keys.reduce((acc, key) => {
     const index = Number(key.split("-")[1]);
     if (acc[index] === undefined) {
