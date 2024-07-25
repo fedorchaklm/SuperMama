@@ -103,12 +103,20 @@ body {
 .form__btn#repeat {
   width: 390px;
   font-size: 2em;
+  height: 60px;
+}
+@media (max-width: 378px) {
+  .form__btn#repeat {
+    font-size: 1.5em;
+    width: 355px;
+    height: auto;
+  }
 }
 @media (max-width: 1024px) {
   .form__btn {
     padding: 14px;
     font-size: 1.1em;
-    width: 245px;
+    width: 200px;
   }
 }
 
@@ -396,7 +404,7 @@ h3 {
   padding: 25px;
   border-radius: 10px;
   border: none;
-  background-color: #FEF2DE;
+  background-color: #fef2de;
   text-align: center;
   padding-left: 72px;
 }
@@ -435,7 +443,7 @@ h3 {
   font-size: 2em;
   white-space: nowrap;
   color: white;
-  background: #AA044A;
+  background: #aa044a;
   cursor: pointer;
 }
 @media (max-width: 768px) {
@@ -481,28 +489,14 @@ input[type=button] {
   }
 }
 
-input[type=button].add_judge,
-input[type=button]#repeat,
-input[type=button]#removeJudje {
+input[type=button].add_judge {
+  background-image: url("../images/judge_add.png");
   background-size: 60%;
   padding-left: 10px;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
 }
-
-input[type=button].add_judge {
-  background-image: url("../images/judge_add.png");
-}
-
-input[type=button]#repeat {
-  background-image: url("../images/btn_repeat.svg");
-}
-
-input[type=button]#removeJudje {
-  background-image: url("../images/delete.svg");
-}
-
 
 .popup {
   position: fixed;

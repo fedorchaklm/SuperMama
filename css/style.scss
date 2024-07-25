@@ -1,4 +1,4 @@
-@import 'mixins-media';
+@import "mixins-media";
 
 body {
   background-image: url("../images/bg_main.png");
@@ -82,6 +82,9 @@ body {
   }
 
   &__btn {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     border-radius: 40px;
     background: #aa044a;
     font-family: "Lobster";
@@ -93,16 +96,22 @@ body {
     border: 0;
     cursor: pointer;
 
-    
-  &#repeat {
-    width: 390px;
-    font-size: 2em;
-  }
+    &#repeat {
+      width: 390px;
+      font-size: 2em;
+      height: 60px;
+
+      @include xs {
+        font-size: 1.5em;
+        width: 355px;
+        height: auto;
+      }
+    }
 
     @include md-max {
       padding: 14px;
       font-size: 1.1em;
-      width: 245px;
+      width: 200px;
     }
   }
 }
@@ -121,7 +130,6 @@ body {
 }
 
 .form__item {
-
   &--participant,
   &--judje {
     text-align: center;
@@ -135,7 +143,6 @@ body {
   }
 
   &--judge {
-
     @include sm {
       width: 65px;
       height: 28px;
@@ -183,7 +190,6 @@ body {
 
   @include md-max {
     padding: 10px;
-
   }
 }
 
@@ -291,7 +297,6 @@ h3 {
     font-size: 1.5em;
   }
 
-
   &--judje {
     width: 200px;
     padding: 20px;
@@ -310,7 +315,6 @@ h3 {
       font-size: 1.7em;
     }
   }
-
 }
 
 .competitors_table {
@@ -333,7 +337,6 @@ h3 {
   cursor: pointer;
   box-shadow: 0px 0px 10px 2px #ee0adb;
 }
-
 
 .gameResult {
   background-image: url("../images/winners.png");
@@ -394,7 +397,7 @@ h3 {
     padding: 25px;
     border-radius: 10px;
     border: none;
-    background-color: #FEF2DE;
+    background-color: #fef2de;
     text-align: center;
     padding-left: 72px;
 
@@ -435,7 +438,7 @@ h3 {
   font-size: 2em;
   white-space: nowrap;
   color: white;
-  background: #AA044A;
+  background: #aa044a;
   cursor: pointer;
 
   @include sm {
@@ -474,11 +477,10 @@ input[type="button"] {
     height: 40px;
     font-size: 1.7em;
   }
-
 }
 
 input[type="button"].add_judge {
-  background-image: url('../images/judge_add.png');
+  background-image: url("../images/judge_add.png");
   background-size: 60%;
   padding-left: 10px;
   background-position: center;
