@@ -371,11 +371,12 @@ class Competition {
     html += `
       <div class="gameResult">
         <h2 class="gameResult__heading">Наші Переможці:</h2>
-        <div class="winnerList">${compResults}</div>
+        <div class="winnerList">${compResults}
+        <input class="form__btn" type="submit" value="Нова гра" id="repeat" onclick="repeatCompetition()">
+        </div>
       </div>
     `;
     this.body.innerHTML = html;
-    this.setStatus("playing");
     this.save();
   }
 
@@ -452,6 +453,7 @@ class Competition {
     };
     localStorage.setItem("competition", JSON.stringify(data));
   }
+
 }
 
 function getMarks(formObj) {
@@ -506,6 +508,12 @@ function getStandings(participants, marks) {
     mark: marks[index],
   }));
   return participantsMarks.sort((a, b) => b.mark - a.mark);
+}
+
+
+function repeatCompetition() {
+  localStorage.clear();
+  window.location.reload();
 }
 
 window.addEventListener("DOMContentLoaded", () => {

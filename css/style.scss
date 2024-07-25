@@ -93,6 +93,12 @@ body {
     border: 0;
     cursor: pointer;
 
+    
+  &#repeat {
+    width: 390px;
+    font-size: 2em;
+  }
+
     @include md-max {
       padding: 14px;
       font-size: 1.1em;

@@ -100,6 +100,10 @@ body {
   border: 0;
   cursor: pointer;
 }
+.form__btn#repeat {
+  width: 390px;
+  font-size: 2em;
+}
 @media (max-width: 1024px) {
   .form__btn {
     padding: 14px;
@@ -333,8 +337,6 @@ h3 {
 }
 
 .gameResult {
-  display: flex;
-  flex-direction: column;
   background-image: url("../images/winners.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -500,6 +502,7 @@ input[type=button]#repeat {
 input[type=button]#removeJudje {
   background-image: url("../images/delete.svg");
 }
+
 
 .popup {
   position: fixed;
