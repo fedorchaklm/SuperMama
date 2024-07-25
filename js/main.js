@@ -155,7 +155,7 @@ class Competition {
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
-      <select class="removable-element form__item--marks" name="mark-${index}-${j + 1}" required>
+      <select class="removable-element form__item--marks" name="mark-${index}-${j}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
@@ -207,7 +207,7 @@ class Competition {
         const newJudgeInput = document.createElement("input");
         newJudgeInput.type = "text";
         newJudgeInput.className = "removable-element form__item--judje";
-        newJudgeInput.name = `judge-${judges_len}`;
+        newJudgeInput.name = `judje-${judges_len}`;
         newJudgeInput.value = `Суддя${judges_len + 1}`;
         console.log(newJudgeInput.value);
         headerRow.appendChild(newJudgeInput);
@@ -471,7 +471,7 @@ class Competition {
 }
 
 function getMarks(formObj) {
-  const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
+    const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
   return keys.reduce((acc, key) => {
     const index = Number(key.split("-")[1]);
     if (acc[index] === undefined) {
