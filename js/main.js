@@ -102,7 +102,7 @@ class Competition {
       this.judjes.forEach((judje, j) => {
         const selectedValue = !this.marksArray ? 1 : this.marksArray[i][j];
         main += `  
-          <select class="form__item--marks" name="mark-${i}-${j}" required>
+          <select class="removable-element form__item--marks" name="mark-${i}-${j}" required>
             <option label="Бали" value=""></option>
             ${[...Array(10).keys()].reduce((acc, item) => {
           const value = item + 1;
@@ -155,7 +155,7 @@ class Competition {
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
-      <select class="form__item--marks" name="mark-${index}-${j + 1}" required>
+      <select class="removable-element form__item--marks" name="mark-${index}-${j + 1}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
