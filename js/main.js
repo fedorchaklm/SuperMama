@@ -106,22 +106,14 @@ class Competition {
         } else {
           selectedValue = this.marksArray[i][j];
         }
-        main += `
-        
+        main += `  
           <select class="form__item--marks" name="mark-${i}-${j}" required>
-          <option label="Бали" value=""></option>
-          <option value="${selectedValue}" selected>${selectedValue}</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
+            <option label="Бали" value=""></option>
+            ${[...Array(10).keys()].reduce((acc, item) => {
+              const value = item + 1;
+              return `${acc}<option ${selectedValue === value ? 'selected' : ''} value="${value}">${value}</option>`;
+            }, '')}
           </select>
-      
       `;
       });
       main += "</div>";
@@ -297,13 +289,7 @@ class Competition {
     rowSpesial.appendChild(itemJudje);
     wrap.appendChild(rowSpesial);
 
-    this.participants.forEach((participant, index) => {
-      const row = getRow(participant, index);
-      wrap.appendChild(row);
-    });
-
-    //формування таблиці
-    function getRow(participant, index) {
+    const getRow = (participant, index) => {
       const row = document.createElement("div");
       row.classList.add("row");
 
@@ -319,20 +305,25 @@ class Competition {
       selectPoints.classList.add("item__note");
       row.appendChild(selectPoints);
       let points = 10;
-      let selectedPoints;
       for (let i = 1; i <= points; i++) {
-        // if (this.res.length === 0) {
-        //   selectedPoints = 1;
-        // } else {
-        //   selectedPoints = this.res[i];
-        // }
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
+
+        if (this.res[index] === i) {
+          option.selected = true;
+        }
+
         selectPoints.add(option);
       }
       return row;
     }
+
+
+    this.participants.forEach((participant, index) => {
+      const row = getRow(participant, index);
+      wrap.appendChild(row);
+    });
 
     const getJudgeResult = () => {
       const selects = document.querySelectorAll(".wrap--special select");
@@ -369,8 +360,7 @@ class Competition {
       compResults += `
       <div class="winner">
         <div class="winner_result">${participant + 1}</div>
-        <input class="winner_desc" type="text" readonly value=" ${
-          standings[participant].participant
+        <input class="winner_desc" type="text" readonly value=" ${standings[participant].participant
         } : ${standings[participant].mark}"></input>
       </div>
       `;
