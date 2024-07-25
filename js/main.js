@@ -90,14 +90,14 @@ class Competition {
     const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
-        `<input type="text" class="form__item--judje" name="judje-${index}" value="${item}">`
+        `<input type="text" class="removable-element form__item--judje" name="judje-${index}" value="${item}">`
       );
     }, "");
     let main = "";
     this.participants.forEach((participant, i) => {
       main += `
       <div class="row">
-      <input type="text" class="form__item--participant" name="participant-${i}" value="${participant}">
+      <input type="text" class="removable-element form__item--participant" name="participant-${i}" value="${participant}">
       `;
       this.judjes.forEach((judje, j) => {
         const selectedValue = !this.marksArray ? 1 : this.marksArray[i][j];
@@ -105,11 +105,10 @@ class Competition {
           <select class="form__item--marks" name="mark-${i}-${j}" required>
             <option label="Бали" value=""></option>
             ${[...Array(10).keys()].reduce((acc, item) => {
-              const value = item + 1;
-              return `${acc}<option ${
-                selectedValue === value ? "selected" : ""
-              } value="${value}">${value}</option>`;
-            }, "")}
+          const value = item + 1;
+          return `${acc}<option ${selectedValue === value ? "selected" : ""
+            } value="${value}">${value}</option>`;
+        }, "")}
           </select>
       `;
       });
@@ -207,7 +206,7 @@ class Competition {
         const headerRow = wrap.querySelector(".row:first-child");
         const newJudgeInput = document.createElement("input");
         newJudgeInput.type = "text";
-        newJudgeInput.className = "form__item--judje";
+        newJudgeInput.className = "removable-element form__item--judje";
         newJudgeInput.name = `judge-${judges_len}`;
         newJudgeInput.value = `Суддя${judges_len + 1}`;
         console.log(newJudgeInput.value);
@@ -215,7 +214,7 @@ class Competition {
         this.participants.forEach((participant, i) => {
           const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
           const addedCol = document.createElement("select");
-          addedCol.className = "form__item--marks";
+          addedCol.className = "removable-element form__item--marks";
           addedCol.name = `mark-${i}-${judges_len}`;
           addedCol.required = true;
           addedCol.innerHTML = `
@@ -374,8 +373,7 @@ class Competition {
       compResults += `
       <div class="winner">
         <div class="winner_result">${participant + 1}</div>
-        <input class="winner_desc" type="text" readonly value=" ${
-          standings[participant].participant
+        <input class="winner_desc" type="text" readonly value=" ${standings[participant].participant
         } : ${standings[participant].mark}"></input>
       </div>
       `;
@@ -412,38 +410,34 @@ class Competition {
   }
 
   removeParticipant() {
-    const wrap = document.getElementById("wrap");
-    const rows = document.querySelectorAll(".row");
-    // const row = rows[this.participantsNumber];
-    // console.log(row);
-    if (rows.length === 2) {
+    if (this.participants.length <= 1) {
       return;
-    } else {
-      wrap.removeChild(wrap.lastChild);
-      this.participants.pop();
-      console.log(this.participants);
-      // this.participantsNumber--;
-      console.log(this.participantsNumber);
-
-      this.save();
     }
+
+    const wrap = document.getElementById("wrap");
+    const rows = wrap.getElementsByClassName('row');
+    rows[rows.length - 1].remove();
+
+    this.participants.pop();
+    this.save();
   }
 
   removeJudje() {
-    const rows = document.querySelectorAll("#wrap .row");
-    console.log(rows);
-    for (let i = 0; i < rows.length; i++) {
-      const row = document.querySelectorAll('#wrap .row')[i];
-      if (row.childNodes.length === 2) {
-        return;
-      } else {
-        console.log(row.lastChild);
-        row.removeChild(row.lastChild);
-      }
-      this.judjes.pop();
-      this.judjesNumber--;
-      this.save();
+    if (this.judjesNumber <= 1) {
+      return;
     }
+
+    const wrap = document.getElementById('wrap');
+    const rows = wrap.getElementsByClassName('row');
+
+    for (let i = 0; i < rows.length; i++) {
+      const elements = rows[i].getElementsByClassName('removable-element');
+      elements[elements.length - 1].remove();
+    }
+
+    this.judjes.pop();
+    this.judjesNumber--;
+    this.save();
   }
 
   load() {
