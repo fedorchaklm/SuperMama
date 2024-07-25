@@ -333,6 +333,8 @@ h3 {
 }
 
 .gameResult {
+  display: flex;
+  flex-direction: column;
   background-image: url("../images/winners.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -477,13 +479,21 @@ input[type=button] {
   }
 }
 
-input[type=button].add_judge {
-  background-image: url("../images/judge_add.png");
+input[type=button].add_judge,
+input[type=button]#repeat {
   background-size: 60%;
   padding-left: 10px;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+}
+
+input[type=button].add_judge {
+  background-image: url("../images/judge_add.png");
+}
+
+input[type=button]#repeat {
+  background-image: url("../images/btn_repeat.svg");
 }
 
 .popup {

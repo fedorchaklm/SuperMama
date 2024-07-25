@@ -6,6 +6,7 @@ class Competition {
     this.judjes = [];
     this.participants = [];
     this.status = "init";
+    this.marksArray = null;
     this.marks = [];
     this.res = [];
     this.container = document.querySelector(".container");
@@ -18,7 +19,7 @@ class Competition {
 
   setParticipants(participantsNumber) {
     for (let i = 0; i < participantsNumber; i++) {
-      this.participants[i] = `Участник${i + 1}`;
+      this.participants[i] = `учасник${i + 1}`;
     }
   }
 
@@ -47,7 +48,7 @@ class Competition {
        <option value="9">9</option>
        <option value="10">10</option>
       </select>
-      <h3>Участниці:</h3>
+      <h3>учасниці:</h3>
       <select class="form__item--register" name="participantsNumber" id="participantsNumber" required>
        <option label="Кількість" value=""></option>
        <option value="1">1</option>
@@ -71,17 +72,21 @@ class Competition {
     const initForm = document.querySelector("#initForm");
     initForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const participantsNumber = document.querySelector("#participantsNumber");
-      let judjesNumber = document.querySelector("#judjesNumber");
-      this.setParticipants(participantsNumber.value);
-      this.setJudjes(judjesNumber.value);
+      const participantsNumber = document.querySelector(
+        "#participantsNumber"
+      ).value;
+      this.participantsNumber = participantsNumber;
+      let judjesNumber = document.querySelector("#judjesNumber").value;
+      this.judjesNumber = judjesNumber;
+      this.setParticipants(participantsNumber);
+      this.setJudjes(judjesNumber);
+      this.save();
       this.setStatus("playing");
       this.draw();
     });
   }
 
   drawPlaying() {
-
     const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
@@ -95,11 +100,17 @@ class Competition {
       <input type="text" class="form__item--participant" name="participant-${i}" value="${participant}">
       `;
       this.judjes.forEach((judje, j) => {
+        let selectedValue;
+        if (!this.marksArray) {
+          selectedValue = 1;
+        } else {
+          selectedValue = this.marksArray[i][j];
+        }
         main += `
         
           <select class="form__item--marks" name="mark-${i}-${j}" required>
           <option label="Бали" value=""></option>
-          <option value="1" selected>1</option>
+          <option value="${selectedValue}" selected>${selectedValue}</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -117,14 +128,14 @@ class Competition {
     });
     const html = `
     <div class="competitors_table">
-      <h2 class="form__heading">Таблиця оцінок</h2>
+      <h2 class="form__heading">Таблиця оцінок </h2>
       <form class="form" id="voteForm">
       <div class="main-wrap">
         <div class="wrap" id="wrap">
           <div class="row">
             <div class="form__item--participant">
             <span class="form__desc">Судді/</span>
-              <span class="form__desc">Участниці</span>
+              <span class="form__desc">учасниці</span>
             </div>
             ${judjesItems}
           </div>
@@ -141,13 +152,12 @@ class Competition {
       </form>
     </div>
     `;
-    //this.container.innerHTML = html;
-    this.body.innerHTML = html; 
+    this.body.innerHTML = html;
     const addParticipantBtn = document.querySelector('input[type="button"]');
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
       const index = this.participants.length;
-      this.participants.push(`Участник${index + 1}`);
+      this.participants.push(`учасник${index + 1}`);
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
@@ -168,7 +178,7 @@ class Competition {
       });
       const addedRow = document.createElement("div");
       addedRow.classList.add("row");
-      addedRow.innerHTML +=  `
+      addedRow.innerHTML += `
       <input 
         type="text" 
         class="form__item--participant" 
@@ -180,26 +190,27 @@ class Competition {
       wrap.appendChild(addedRow);
     });
 
-    const addJudgetBtn = document.querySelector('.add_judge');
-    addJudgetBtn.addEventListener('click', () => {
+    const addJudgetBtn = document.querySelector(".add_judge");
+    addJudgetBtn.addEventListener("click", () => {
       const judges_len = this.judjes.length;
-      if(judges_len < 10){
-          const wrap = document.querySelector("#wrap");
-          this.judjes.push(`Суддя ${judges_len + 1}`);
-          const headerRow = wrap.querySelector(".row:first-child");
-          const newJudgeInput = document.createElement("input");
-          newJudgeInput.type = "text";
-          newJudgeInput.className = "form__item--judje";
-          newJudgeInput.name = `judge-${judges_len}`;
-          newJudgeInput.value = `Суддя ${judges_len + 1}`;
-          headerRow.appendChild(newJudgeInput);
-          this.participants.forEach((participant, i) => {
-            const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
-            const addedCol = document.createElement("select");
-            addedCol.className = "form__item--marks";
-            addedCol.name = `mark-${i}-${judges_len}`;
-            addedCol.required = true;
-            addedCol.innerHTML = `
+      if (judges_len < 10) {
+        const wrap = document.querySelector("#wrap");
+        this.judjes.push(`Суддя ${judges_len + 1}`);
+        const headerRow = wrap.querySelector(".row:first-child");
+        const newJudgeInput = document.createElement("input");
+        newJudgeInput.type = "text";
+        newJudgeInput.className = "form__item--judje";
+        newJudgeInput.name = `judge-${judges_len}`;
+        newJudgeInput.value = `Суддя${judges_len + 1}`;
+        console.log(newJudgeInput.value);
+        headerRow.appendChild(newJudgeInput);
+        this.participants.forEach((participant, i) => {
+          const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
+          const addedCol = document.createElement("select");
+          addedCol.className = "form__item--marks";
+          addedCol.name = `mark-${i}-${judges_len}`;
+          addedCol.required = true;
+          addedCol.innerHTML = `
               <option label="Бали" value=""></option>
               <option value="1" selected>1</option>
               <option value="2">2</option>
@@ -212,27 +223,25 @@ class Competition {
               <option value="9">9</option>
               <option value="10">10</option>
             `;
-            participantRow.appendChild(addedCol);
-          });
+          participantRow.appendChild(addedCol);
+        });
       } else {
         console.log(`Error, ${judges_len}`);
-        const popup = document.createElement('div');
-        popup.classList.add('popup');
+        const popup = document.createElement("div");
+        popup.classList.add("popup");
         popup.textContent = `Mаксимальна кількість суддів - 10`;
         document.body.appendChild(popup);
         setTimeout(() => {
           popup.remove();
         }, 2000);
       }
-  }
-);
+    });
 
     const voteForm = document.querySelector("#voteForm");
     voteForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formObj = Object.fromEntries(formData.entries());
-      console.log(formObj);
       for (let i = 0; i < this.participants.length; i++) {
         this.participants[i] = formObj[`participant-${i}`];
       }
@@ -240,17 +249,16 @@ class Competition {
         this.judjes[i] = formObj[`judje-${i}`];
       }
       this.marks = getMarks(formObj);
-      console.log(this.marks);
+      this.marksArray = getMarksArr(formObj);
+      this.save();
       this.setStatus("judgesPoints");
       this.draw();
     });
   }
 
   judgesPoints() {
-    // const container = document.querySelector(".container");
-
-    const containerKarpachovPage = document.createElement('div');
-    containerKarpachovPage.classList.add('contKarpNotes');
+    const containerKarpachovPage = document.createElement("div");
+    containerKarpachovPage.classList.add("contKarpNotes");
     //заголовок
     const title = document.createElement("h2");
     title.classList.add("form__heading");
@@ -303,7 +311,7 @@ class Competition {
       inputText.classList.add("item__note");
       inputText.type = "text";
       inputText.readOnly = "true";
-      inputText.placeholder = `Участник${index + 1}`;
+      inputText.placeholder = `учасник${index + 1}`;
       inputText.value = `${participant}`;
       row.appendChild(inputText);
 
@@ -311,7 +319,13 @@ class Competition {
       selectPoints.classList.add("item__note");
       row.appendChild(selectPoints);
       let points = 10;
+      let selectedPoints;
       for (let i = 1; i <= points; i++) {
+        // if (this.res.length === 0) {
+        //   selectedPoints = 1;
+        // } else {
+        //   selectedPoints = this.res[i];
+        // }
         const option = document.createElement("option");
         option.value = i;
         option.text = i;
@@ -320,25 +334,24 @@ class Competition {
       return row;
     }
 
-      const getJudgeResult = () => {
+    const getJudgeResult = () => {
       const selects = document.querySelectorAll(".wrap--special select");
       const result = [];
-      selects.forEach(select => {
+      selects.forEach((select) => {
         result.push(Number(select.value));
       });
       return result;
     };
 
-
     button.addEventListener("click", () => {
       const result = getJudgeResult();
-      console.log(result);
       this.res = result;
+      this.save();
       this.setStatus("result");
       this.draw();
     });
 
-    this.body.innerHTML = '';
+    this.body.innerHTML = "";
     table.appendChild(wrap);
     table.appendChild(button);
 
@@ -352,14 +365,15 @@ class Competition {
     const points = totalPoints(this.marks, this.res);
     const standings = getStandings(this.participants, points);
     let compResults = "";
-    for(let participant = 0; participant < standings.length; participant++) {
-      compResults +=
-      `
+    for (let participant = 0; participant < standings.length; participant++) {
+      compResults += `
       <div class="winner">
         <div class="winner_result">${participant + 1}</div>
-        <input class="winner_desc" type="text" readonly value=" ${standings[participant].participant} : ${standings[participant].mark}"></input>
+        <input class="winner_desc" type="text" readonly value=" ${
+          standings[participant].participant
+        } : ${standings[participant].mark}"></input>
       </div>
-      `
+      `;
     }
     let html = "";
     html += `
@@ -368,7 +382,9 @@ class Competition {
         <div class="winnerList">${compResults}</div>
       </div>
     `;
-    this.body.innerHTML = html; 
+    this.body.innerHTML = html;
+    this.setStatus("playing");
+    this.save();
   }
 
   draw() {
@@ -389,6 +405,35 @@ class Competition {
         this.drawResult();
     }
   }
+
+  load() {
+    const data = JSON.parse(localStorage.getItem("competition"));
+
+    this.name = data.name;
+    this.participantsNumber = data.participantsNumber;
+    this.judjesNumber = data.judjesNumber;
+    this.judjes = data.judjes;
+    this.participants = data.participants;
+    this.status = data.status;
+    this.marksArray = data.marksArray;
+    this.marks = data.marks;
+    this.res = data.res;
+  }
+
+  save() {
+    const data = {
+      name: this.name,
+      participantsNumber: this.participantsNumber,
+      judjesNumber: this.judjesNumber,
+      judjes: this.judjes,
+      participants: this.participants,
+      status: this.status,
+      marksArray: this.marksArray,
+      marks: this.marks,
+      res: this.res,
+    };
+    localStorage.setItem("competition", JSON.stringify(data));
+  }
 }
 
 function getMarks(formObj) {
@@ -401,6 +446,27 @@ function getMarks(formObj) {
     acc[index] += Number(formObj[key]);
     return acc;
   }, []);
+}
+
+function getMarksArr(formObj) {
+  const numParticipants = Object.keys(formObj).filter((key) =>
+    key.startsWith("participant")
+  ).length;
+  const numJudges = Object.keys(formObj).filter((key) =>
+    key.startsWith("judje")
+  ).length;
+
+  const marksArray = [];
+
+  for (let i = 0; i < numParticipants; i++) {
+    const participantMarks = [];
+    for (let j = 0; j < numJudges; j++) {
+      const markKey = `mark-${i}-${j}`;
+      participantMarks.push(parseInt(formObj[markKey]));
+    }
+    marksArray.push(participantMarks);
+  }
+  return marksArray;
 }
 
 function totalPoints(marks, res) {
@@ -424,5 +490,10 @@ function getStandings(participants, marks) {
   return participantsMarks.sort((a, b) => b.mark - a.mark);
 }
 
-const competition = new Competition("Супер Мама");
-competition.draw();
+window.addEventListener("DOMContentLoaded", () => {
+  const competition = new Competition("Супер Мама");
+  if (localStorage.getItem("competition")) {
+    competition.load();
+  }
+  competition.draw();
+});
