@@ -90,24 +90,25 @@ class Competition {
     const judjesItems = this.judjes.reduce((acc, item, index) => {
       return (
         acc +
-        `<input type="text" class="form__item--judje" name="judje-${index}" value="${item}">`
+        `<input type="text" class="removable-element form__item--judje" name="judje-${index}" value="${item}">`
       );
     }, "");
     let main = "";
     this.participants.forEach((participant, i) => {
       main += `
       <div class="row">
-      <input type="text" class="form__item--participant" name="participant-${i}" value="${participant}">
+      <input type="text" class="removable-element form__item--participant" name="participant-${i}" value="${participant}">
       `;
       this.judjes.forEach((judje, j) => {
         const selectedValue = !this.marksArray ? 1 : this.marksArray[i][j];
         main += `  
-          <select class="form__item--marks" name="mark-${i}-${j}" required>
+          <select class="removable-element form__item--marks" name="mark-${i}-${j}" required>
             <option label="Бали" value=""></option>
             ${[...Array(10).keys()].reduce((acc, item) => {
           const value = item + 1;
-          return `${acc}<option ${selectedValue === value ? 'selected' : ''} value="${value}">${value}</option>`;
-        }, '')}
+          return `${acc}<option ${selectedValue === value ? "selected" : ""
+            } value="${value}">${value}</option>`;
+        }, "")}
           </select>
       `;
       });
@@ -130,8 +131,10 @@ class Competition {
         </div>
         <div class="container container-sm">
           <div class="container container-sm container-add">
-            <input type="button" value="+">
+            <input type="button" value="+" id="addParticipant">
+            <input type="button" value="-" id="removeParticipant">
             <input type="button" class="add_judge"> 
+            <input type="button" id="removeJudje"> 
           </div>
           <input class="form__btn" type="submit" form="voteForm" value="Проголосувати">
         </div>
@@ -140,15 +143,19 @@ class Competition {
     </div>
     `;
     this.body.innerHTML = html;
-    const addParticipantBtn = document.querySelector('input[type="button"]');
+    const addParticipantBtn = document.querySelector(
+      'input[type="button"]#addParticipant'
+    );
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
       const index = this.participants.length;
       this.participants.push(`Учасник${index + 1}`);
+      console.log(this.participants);
+      this.participantsNumber++;
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
-      <select class="form__item--marks" name="mark-${index}-${j + 1}" required>
+      <select class="removable-element form__item--marks" name="mark-${index}-${j}" required>
       <option label="Бали" value=""></option>
       <option value="1" selected>1</option>
       <option value="2">2</option>
@@ -177,24 +184,37 @@ class Competition {
       wrap.appendChild(addedRow);
     });
 
+    const removeParticipantBtn = document.querySelector(
+      'input[type="button"]#removeParticipant'
+    );
+    removeParticipantBtn.addEventListener("click", () =>
+      this.removeParticipant()
+    );
+
+    const removeJudjeBtn = document.querySelector(
+      'input[type="button"]#removeJudje'
+    );
+    removeJudjeBtn.addEventListener("click", () => this.removeJudje());
+
     const addJudgetBtn = document.querySelector(".add_judge");
     addJudgetBtn.addEventListener("click", () => {
       const judges_len = this.judjes.length;
       if (judges_len < 10) {
         const wrap = document.querySelector("#wrap");
         this.judjes.push(`Суддя ${judges_len + 1}`);
+        this.judjesNumber++;
         const headerRow = wrap.querySelector(".row:first-child");
         const newJudgeInput = document.createElement("input");
         newJudgeInput.type = "text";
-        newJudgeInput.className = "form__item--judje";
-        newJudgeInput.name = `judge-${judges_len}`;
+        newJudgeInput.className = "removable-element form__item--judje";
+        newJudgeInput.name = `judje-${judges_len}`;
         newJudgeInput.value = `Суддя${judges_len + 1}`;
         console.log(newJudgeInput.value);
         headerRow.appendChild(newJudgeInput);
         this.participants.forEach((participant, i) => {
           const participantRow = wrap.querySelector(`.row:nth-child(${i + 2})`);
           const addedCol = document.createElement("select");
-          addedCol.className = "form__item--marks";
+          addedCol.className = "removable-element form__item--marks";
           addedCol.name = `mark-${i}-${judges_len}`;
           addedCol.required = true;
           addedCol.innerHTML = `
@@ -311,7 +331,7 @@ class Competition {
         selectPoints.add(option);
       }
       return row;
-    }
+    };
 
     this.participants.forEach((participant, index) => {
       const row = getRow(participant, index);
@@ -389,6 +409,37 @@ class Competition {
     }
   }
 
+  removeParticipant() {
+    if (this.participants.length <= 1) {
+      return;
+    }
+
+    const wrap = document.getElementById("wrap");
+    const rows = wrap.getElementsByClassName('row');
+    rows[rows.length - 1].remove();
+
+    this.participants.pop();
+    this.save();
+  }
+
+  removeJudje() {
+    if (this.judjesNumber <= 1) {
+      return;
+    }
+
+    const wrap = document.getElementById('wrap');
+    const rows = wrap.getElementsByClassName('row');
+
+    for (let i = 0; i < rows.length; i++) {
+      const elements = rows[i].getElementsByClassName('removable-element');
+      elements[elements.length - 1].remove();
+    }
+
+    this.judjes.pop();
+    this.judjesNumber--;
+    this.save();
+  }
+
   load() {
     const data = JSON.parse(localStorage.getItem("competition"));
 
@@ -420,7 +471,7 @@ class Competition {
 }
 
 function getMarks(formObj) {
-  const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
+    const keys = Object.keys(formObj).filter((key) => key.startsWith("mark"));
   return keys.reduce((acc, key) => {
     const index = Number(key.split("-")[1]);
     if (acc[index] === undefined) {
