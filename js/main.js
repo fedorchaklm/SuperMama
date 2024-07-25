@@ -19,7 +19,7 @@ class Competition {
 
   setParticipants(participantsNumber) {
     for (let i = 0; i < participantsNumber; i++) {
-      this.participants[i] = `учасник${i + 1}`;
+      this.participants[i] = `Учасник${i + 1}`;
     }
   }
 
@@ -48,7 +48,7 @@ class Competition {
        <option value="9">9</option>
        <option value="10">10</option>
       </select>
-      <h3>учасниці:</h3>
+      <h3>Учасниці:</h3>
       <select class="form__item--register" name="participantsNumber" id="participantsNumber" required>
        <option label="Кількість" value=""></option>
        <option value="1">1</option>
@@ -157,7 +157,7 @@ class Competition {
     addParticipantBtn.addEventListener("click", () => {
       const wrap = document.querySelector("#wrap");
       const index = this.participants.length;
-      this.participants.push(`учасник${index + 1}`);
+      this.participants.push(`Учасник${index + 1}`);
       let formItem = "";
       this.judjes.forEach((judje, j) => {
         formItem += `
@@ -311,7 +311,7 @@ class Competition {
       inputText.classList.add("item__note");
       inputText.type = "text";
       inputText.readOnly = "true";
-      inputText.placeholder = `учасник${index + 1}`;
+      inputText.placeholder = `Учасник${index + 1}`;
       inputText.value = `${participant}`;
       row.appendChild(inputText);
 
