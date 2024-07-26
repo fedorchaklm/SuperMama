@@ -373,6 +373,7 @@ class Competition {
         <h2 class="gameResult__heading">Наші Переможці:</h2>
         <div class="winnerList">${compResults}
         <input class="form__btn" type="submit" value="Нова гра" id="repeat" onclick="repeatCompetition()">
+        <input class="form__btn" type="submit" value="Змінити бали" id="changePoints" onclick="changePointsCompetition()">
         </div>
       </div>
     `;
@@ -523,3 +524,11 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   competition.draw();
 });
+
+function changePointsCompetition() {
+  const competition = new Competition("Супер Мама");
+  localStorage.getItem("competition");
+  competition.load();
+  competition.setStatus("playing");
+  competition.draw();
+}

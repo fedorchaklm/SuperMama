@@ -100,13 +100,13 @@ body {
   border: 0;
   cursor: pointer;
 }
-.form__btn#repeat {
+.form__btn#repeat, .form__btn#changePoints {
   width: 390px;
   font-size: 2em;
   height: 60px;
 }
 @media (max-width: 378px) {
-  .form__btn#repeat {
+  .form__btn#repeat, .form__btn#changePoints {
     font-size: 1.5em;
     width: 355px;
     height: auto;
