@@ -489,13 +489,21 @@ input[type=button] {
   }
 }
 
-input[type=button].add_judge {
-  background-image: url("../images/judge_add.png");
+input[type=button].add_judge,
+input[type=button]#removeJudje {
   background-size: 60%;
   padding-left: 10px;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
+}
+
+input[type=button].add_judge {
+  background-image: url("../images/judge_add.png");
+}
+
+input[type=button]#removeJudje {
+  background-image: url("../images/delete.svg");
 }
 
 .popup {
